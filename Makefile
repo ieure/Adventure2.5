@@ -2,13 +2,14 @@
 # equipment, and has been ported to Sun for entertainment purposes only.
 # The author (Don Woods) retains full rights to the work.
 
+CFLAGS+=-O $(DBX)
 OBJS=main.o init.o actions1.o actions2.o score.o misc.o datime.o
 
 .c.o:
-	gcc -O $(DBX) -c $<
+	gcc $(CFLAGS) -c $<
 
 adventure:	$(OBJS)
-	gcc -O $(DBX) -o adventure $(OBJS)
+	gcc $(CFLAGS) -o adventure $(OBJS)
 
 main.o:		misc.h funcs.h
 
