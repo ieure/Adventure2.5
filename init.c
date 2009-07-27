@@ -671,14 +671,10 @@ static quick_save() {
 }
 
 static quick_init() {
-#ifdef AMIGA
-	f = fopen("ram:adventure.data", READ_MODE);
-#else
 	extern char *getenv();
 	char *adv = getenv("ADVENTURE");
 	f = NULL;
 	if(adv)f = fopen(adv,READ_MODE);
-#endif
 	if(f == NULL)f = fopen("adventure.data",READ_MODE);
 	if(f == NULL)return(FALSE);
 	init_reading = TRUE;
