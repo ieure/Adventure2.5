@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "misc.h"
 #ifdef __MSDOS__
 #include "alloc.h"

@@ -3,6 +3,7 @@
 #include "share.h"
 #include "funcs.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #define TRUE  (0==0)
 #define FALSE (0!=0)
@@ -163,12 +164,6 @@
  *	%9 = A 9-DIGIT NUMBER
  *	%B = VARIABLE NUMBER OF BLANKS
  *	%! = THE ENTIRE MESSAGE SHOULD BE SUPPRESSED */
-
-initialise() {
-	printf("Initialising...\n");
-	if(!quick_init()){raw_init(); report(); quick_save();}
-	finish_init();
-}
 
 static raw_init() {
 	printf("Couldn't find adventure.data, using adventure.text...\n");
@@ -632,38 +627,6 @@ static FILE *f;
 static void quick_item(long*);
 static void quick_array(long*, long);
 
-static quick_init() {
-#ifdef AMIGA
-	f = fopen("ram:adventure.data", READ_MODE);
-#else
-	extern char *getenv();
-	char *adv = getenv("ADVENTURE");
-	f = NULL;
-	if(adv)f = fopen(adv,READ_MODE);
-#endif
-	if(f == NULL)f = fopen("adventure.data",READ_MODE);
-	if(f == NULL)return(FALSE);
-	init_reading = TRUE;
-	init_cksum = 1;
-	quick_io();
-	if(fread(&K,4,1,f) == 1) init_cksum -= K; else init_cksum = 1;
-	fclose(f);
-	if(init_cksum != 0)printf("Checksum error!\n");
-	return(init_cksum == 0);
-}
-
-static quick_save() {
-	printf("Writing adventure.data...\n");
-	f = fopen("adventure.data",WRITE_MODE);
-	if(f == NULL){printf("Can't open file!\n"); return(0);}
-	init_reading = FALSE;
-	init_cksum = 1;
-	quick_io();
-	fwrite(&init_cksum,4,1,f);
-	fclose(f);
-	return(0);
-}
-
 static quick_io() {
 	quick_item(&LINUSE);
 	quick_item(&TRVS);
@@ -693,6 +656,44 @@ static quick_io() {
 	quick_array(ACTSPK,VRBSIZ);
 	quick_array((long *)HINTS,(HNTMAX+1)*5-1);
 	return(0);
+}
+
+static quick_save() {
+	printf("Writing adventure.data...\n");
+	f = fopen("adventure.data",WRITE_MODE);
+	if(f == NULL){printf("Can't open file!\n"); return(0);}
+	init_reading = FALSE;
+	init_cksum = 1;
+	quick_io();
+	fwrite(&init_cksum,4,1,f);
+	fclose(f);
+	return(0);
+}
+
+static quick_init() {
+#ifdef AMIGA
+	f = fopen("ram:adventure.data", READ_MODE);
+#else
+	extern char *getenv();
+	char *adv = getenv("ADVENTURE");
+	f = NULL;
+	if(adv)f = fopen(adv,READ_MODE);
+#endif
+	if(f == NULL)f = fopen("adventure.data",READ_MODE);
+	if(f == NULL)return(FALSE);
+	init_reading = TRUE;
+	init_cksum = 1;
+	quick_io();
+	if(fread(&K,4,1,f) == 1) init_cksum -= K; else init_cksum = 1;
+	fclose(f);
+	if(init_cksum != 0)printf("Checksum error!\n");
+	return(init_cksum == 0);
+}
+
+initialise() {
+	printf("Initialising...\n");
+	if(!quick_init()){raw_init(); report(); quick_save();}
+	finish_init();
 }
 
 static void quick_item(W)long *W; {

@@ -2,6 +2,7 @@
 #include "main.h"
 #include "share.h"
 #include "funcs.h"
+#include <stdlib.h>
 
 #define TRUE  (0==0)
 #define FALSE (0!=0)

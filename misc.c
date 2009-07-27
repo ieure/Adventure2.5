@@ -1,6 +1,7 @@
 #include "main.h"
 #include "misc.h"
 #include <stdio.h>
+#include <stdlib.h>xo
 
 #define TRUE  (0==0)
 #define FALSE (0!=0)
@@ -888,7 +889,7 @@ long I, VAL; static FILE *OPENED = NULL;
 	if(MAP2[1] == 0)MPINIT();
 
 	if(FIL) goto L15;
-	gets(INLINE+1);
+	fgets(INLINE+1, 99, stdin);
 	if(feof(stdin)) score(1);
 	 goto L20;
 
@@ -1002,7 +1003,7 @@ L10:	fclose(F);
 	return;
 
 L20:	printf("\nFile name: ");
-	gets(NAME);
+	fgets(NAME, 50, stdin);
 	F=fopen(NAME,(IN ? READ_MODE : WRITE_MODE));
 	if(F == NULL) {printf("Can't open file, try again.\n"); goto L20;}
 	return;
