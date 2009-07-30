@@ -1,10 +1,5 @@
-#ifdef __MSDOS__	/* define fopen modes for binary files */
-#define READ_MODE "rb"
-#define WRITE_MODE "wb"
-#else
 #define READ_MODE "r"
 #define WRITE_MODE "w"
-#endif
 
 extern void fSPEAK(long);
 #define SPEAK(N) fSPEAK(N)

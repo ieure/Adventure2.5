@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "misc.h"
-#ifdef __MSDOS__
-#include "alloc.h"
-#endif
 
 #define TRUE  (0==0)
 #define FALSE (0!=0)
