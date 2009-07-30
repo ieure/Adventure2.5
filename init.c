@@ -659,23 +659,36 @@ static quick_io() {
 }
 
 static quick_save() {
+	char *save_path;
+
+	save_path = malloc(100);
+	snprintf(save_path, 100, "%s/.adventure.data", getenv("HOME"));
+
 	printf("Writing adventure.data...\n");
-	f = fopen("adventure.data",WRITE_MODE);
+	f = fopen(save_path, WRITE_MODE);
 	if(f == NULL){printf("Can't open file!\n"); return(0);}
 	init_reading = FALSE;
 	init_cksum = 1;
 	quick_io();
 	fwrite(&init_cksum,4,1,f);
 	fclose(f);
+	free(save_path);
 	return(0);
 }
 
 static quick_init() {
-	extern char *getenv();
 	char *adv = getenv("ADVENTURE");
+	char *load_path;
+
 	f = NULL;
 	if(adv)f = fopen(adv,READ_MODE);
-	if(f == NULL)f = fopen("adventure.data",READ_MODE);
+
+	if(f == NULL) {
+		load_path = malloc(100);
+		snprintf(load_path, 100, "%s/.adventure.data", getenv("HOME"));
+		f = fopen(load_path, READ_MODE);
+		free(load_path);
+	}
 	if(f == NULL)return(FALSE);
 	init_reading = TRUE;
 	init_cksum = 1;

@@ -894,8 +894,8 @@ long I, VAL; static FILE *OPENED = NULL;
 	 goto L20;
 
 L15:	if(!OPENED){
-		OPENED=fopen("adventure.text","r" /* NOT binary */);
-		if(!OPENED){printf("Can't read adventure.text!\n"); exit(FALSE);}
+		OPENED=fopen("@@PREFIX@@/share/adventure430/adventure.text","r" /* NOT binary */);
+		if(!OPENED){printf("Can't read @@PREFIX@@/share/adventure430/adventure.text!\n"); exit(FALSE);}
 		}
 	fgets(INLINE+1,100,OPENED);
 
