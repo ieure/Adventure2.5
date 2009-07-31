@@ -1,4 +1,4 @@
 extern long ABB[], ATAB[], ATLOC[], BLKLIN, DFLAG, DLOC[], FIXED[], HOLDNG,
 		KTAB[], *LINES, LINK[], LNLENG, LNPOSN,
 		PARMS[], PLACE[], PTEXT[], RTEXT[], TABSIZ;
-extern mchar INLINE[], MAP1[], MAP2[];
+extern char INLINE[], MAP1[], MAP2[];
