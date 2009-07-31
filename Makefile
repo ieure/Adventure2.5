@@ -3,7 +3,7 @@
 # The author (Don Woods) retains full rights to the work.
 
 CFLAGS+=-O $(DBX)
-LDFLAGS+=
+LDFLAGS+=-lreadline
 OBJS=main.o init.o actions1.o actions2.o score.o misc.o datime.o
 
 .c.o:

@@ -2,6 +2,8 @@
 #include "misc.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <readline/readline.h>
 
 #define TRUE  (0==0)
 #define FALSE (0!=0)
@@ -855,6 +857,7 @@ void fBUG(NUM)long NUM; {
 #undef MAPLIN
 void fMAPLIN(FIL)long FIL; {
 long I, VAL; static FILE *OPENED = NULL;
+char *read_line;
 
 /*  READ A LINE OF INPUT, EITHER FROM A FILE (IF FIL=.TRUE.) OR FROM THE
  *  KEYBOARD, TRANSLATE THE CHARS TO INTEGERS IN THE RANGE 0-126 AND STORE
@@ -889,8 +892,11 @@ long I, VAL; static FILE *OPENED = NULL;
 	if(MAP2[1] == 0)MPINIT();
 
 	if(FIL) goto L15;
-	fgets(INLINE+1, 99, stdin);
-	if(feof(stdin)) score(1);
+    read_line = readline("> ");
+	if(read_line == NULL) score(1);
+    add_history(read_line);
+    strncpy(INLINE+1, read_line, 99);
+    free(read_line);
 	 goto L20;
 
 L15:	if(!OPENED){
