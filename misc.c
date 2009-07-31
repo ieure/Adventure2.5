@@ -1,7 +1,7 @@
 #include "main.h"
 #include "misc.h"
 #include <stdio.h>
-#include <stdlib.h>xo
+#include <stdlib.h>
 
 #define TRUE  (0==0)
 #define FALSE (0!=0)
